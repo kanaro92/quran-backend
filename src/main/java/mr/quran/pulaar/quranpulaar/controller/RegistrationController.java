@@ -2,6 +2,7 @@ package mr.quran.pulaar.quranpulaar.controller;
 
 import mr.quran.pulaar.quranpulaar.model.RegistrationInfo;
 import mr.quran.pulaar.quranpulaar.model.Vente;
+import mr.quran.pulaar.quranpulaar.model.dto.VenteDTO;
 import mr.quran.pulaar.quranpulaar.service.RegistrationService;
 import mr.quran.pulaar.quranpulaar.service.VenteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,12 @@ public class RegistrationController {
     RegistrationService registrationService;
 
     @PostMapping
-    public ResponseEntity<Vente> registerPhone(@RequestBody RegistrationInfo registrationInfo) {
+    public ResponseEntity<VenteDTO> registerPhone(@RequestBody RegistrationInfo registrationInfo) {
         return ResponseEntity.status(HttpStatus.CREATED).body(registrationService.registerPhone(registrationInfo));
     }
 
     @GetMapping("/{uid}")
-    public ResponseEntity<Vente> registerPhoneAfterUninstall(@PathVariable String uid) {
+    public ResponseEntity<VenteDTO> registerPhoneAfterUninstall(@PathVariable String uid) {
         return ResponseEntity.status(HttpStatus.OK).body(registrationService.registerPhoneAfterUninstall(uid));
     }
 }

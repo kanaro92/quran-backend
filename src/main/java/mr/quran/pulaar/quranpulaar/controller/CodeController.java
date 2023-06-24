@@ -1,6 +1,7 @@
 package mr.quran.pulaar.quranpulaar.controller;
 
 import mr.quran.pulaar.quranpulaar.model.Code;
+import mr.quran.pulaar.quranpulaar.model.dto.CodeDTO;
 import mr.quran.pulaar.quranpulaar.service.CodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class CodeController {
     }
 
     @GetMapping("/generateCode")
-    public ResponseEntity<Code> generateCode() {
+    public ResponseEntity<CodeDTO> generateCode() {
         return ResponseEntity.status(HttpStatus.OK).body(codeService.generateCode());
     }
 }

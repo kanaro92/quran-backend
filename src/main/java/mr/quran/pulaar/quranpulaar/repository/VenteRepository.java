@@ -12,7 +12,7 @@ import java.util.List;
 public interface VenteRepository
         extends JpaRepository<Vente, Long> {
     Vente findByCode_Code(Integer code);
-    List<Vente> findByPhone(Integer code);
+    Vente findByPhone(String code);
     Vente findByCode_CodeAndIsUsedIsFalse(Integer code);
     Vente findByDeviceInfoModel_UniqueId(String uid);
 }
