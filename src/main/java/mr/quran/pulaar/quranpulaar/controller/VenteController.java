@@ -1,6 +1,8 @@
 package mr.quran.pulaar.quranpulaar.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import mr.quran.pulaar.quranpulaar.model.Vente;
+import mr.quran.pulaar.quranpulaar.model.dto.VenteDTO;
 import mr.quran.pulaar.quranpulaar.service.VenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,38 +13,47 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/quran/ventes")
+@Slf4j
+
 public class VenteController {
 
     @Autowired
     VenteService venteService;
 
     @GetMapping("/{code}")
-    public ResponseEntity<Vente> findVenteByCode(@PathVariable Integer code) {
+    public ResponseEntity<VenteDTO> findVenteByCode(@PathVariable Integer code) {
         return ResponseEntity.status(HttpStatus.OK).body(venteService.findVenteByCode(code));
     }
 
     @GetMapping("/byPhoneNumber/{phoneNumber}")
-    public ResponseEntity<List<Vente>> findVenteByPhoneNumber(@PathVariable Integer phoneNumber) {
+    public ResponseEntity<VenteDTO> findVenteByPhoneNumber(@PathVariable String phoneNumber) {
         return ResponseEntity.status(HttpStatus.OK).body(venteService.findVenteByPhoneNumber(phoneNumber));
     }
 
     @GetMapping("/byPhoneUID/{uid}")
-    public ResponseEntity<Vente> byPhoneUID(@PathVariable String uid) {
+    public ResponseEntity<VenteDTO> byPhoneUID(@PathVariable String uid) {
         return ResponseEntity.status(HttpStatus.OK).body(venteService.findByDeviceInfoModelUniqueId(uid));
     }
 
     @PostMapping
-    public ResponseEntity<Vente> save(@RequestBody Vente vente) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(venteService.save(vente));
+    public ResponseEntity<VenteDTO> save(@RequestBody VenteDTO vente) {
+        VenteDTO dbVente = null;
+        try {
+            dbVente = venteService.save(vente);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(dbVente);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(dbVente);
     }
 
     @GetMapping
-    public ResponseEntity<List<Vente>> findAllVentes() {
+    public ResponseEntity<List<VenteDTO>> findAllVentes() {
         return ResponseEntity.status(HttpStatus.OK).body(venteService.findAllVentes());
     }
 
     @GetMapping("/reinitialiseUsedByCode/{code}")
-    public ResponseEntity<Vente> reinitialiseUsedByCode(@PathVariable Integer code) {
+    public ResponseEntity<VenteDTO> reinitialiseUsedByCode(@PathVariable Integer code) {
         return ResponseEntity.status(HttpStatus.OK).body(venteService.reinitialiseUsedByCode(code));
     }
 }
