@@ -1,9 +1,6 @@
 package mr.quran.pulaar.quranpulaar.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,10 +9,11 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
-@Getter
-@Setter
+@Data
 @EqualsAndHashCode
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 public class AppUser implements UserDetails {
 

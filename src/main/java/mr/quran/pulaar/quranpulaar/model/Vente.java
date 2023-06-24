@@ -1,18 +1,17 @@
 package mr.quran.pulaar.quranpulaar.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+
 @EqualsAndHashCode
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Data
+@Builder
 public class Vente {
     @SequenceGenerator(
             name = "vente_sequence",
@@ -26,7 +25,7 @@ public class Vente {
     )
     private Long id;
     private String name;
-    private Long phone;
+    private String phone;
     private String country;
     private Double mruPrice;
     private Double cfaPrice;
