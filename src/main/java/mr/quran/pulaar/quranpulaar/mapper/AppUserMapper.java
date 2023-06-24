@@ -15,7 +15,7 @@ public class AppUserMapper {
                 .id(appUser.getId())
                 .firstName(appUser.getFirstName())
                 .lastName(appUser.getLastName())
-                .email(appUser.getEmail())
+                .username(appUser.getUsername())
                 .build();
     }
 
@@ -27,7 +27,7 @@ public class AppUserMapper {
                 .id(appUserDTO.getId())
                 .firstName(appUserDTO.getFirstName())
                 .lastName(appUserDTO.getLastName())
-                .email(appUserDTO.getEmail())
+                .username(appUserDTO.getUsername())
                 .build();
     }
 }

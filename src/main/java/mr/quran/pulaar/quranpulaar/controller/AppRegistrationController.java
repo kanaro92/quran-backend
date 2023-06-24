@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class AppRegistrationController {
 
-    private final AppRegistrationService registrationService;
-
-    @PostMapping
-    public String register(@RequestBody RegistrationRequest request) {
-        return registrationService.register(request);
-    }
-
-    @GetMapping(path = "/confirm")
-    public String confirm(@RequestParam("token") String token) {
-        return registrationService.confirmToken(token);
-    }
+//    private final AppRegistrationService registrationService;
+//
+//    @PostMapping
+//    public String register(@RequestBody RegistrationRequest request) {
+//        return registrationService.register(request);
+//    }
+//
+//    @GetMapping(path = "/confirm")
+//    public String confirm(@RequestParam("token") String token) {
+//        return registrationService.confirmToken(token);
+//    }
 
 }

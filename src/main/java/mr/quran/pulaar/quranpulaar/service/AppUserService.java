@@ -19,31 +19,30 @@ import java.util.UUID;
 public class AppUserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MSG =
-            "user with email %s not found";
+            "user with username %s not found";
 
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
-
     @Override
-    public UserDetails loadUserByUsername(String email)
+    public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        return appUserRepository.findByEmail(email)
+        return appUserRepository.findByUsername(username)
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
-                                String.format(USER_NOT_FOUND_MSG, email)));
+                                String.format(USER_NOT_FOUND_MSG, username)));
     }
 
     public String signUpUser(AppUser appUser) {
         boolean userExists = appUserRepository
-                .findByEmail(appUser.getEmail())
+                .findByUsername(appUser.getUsername())
                 .isPresent();
 
         if (userExists) {
             // TODO check of attributes are the same and
             // TODO if email not confirmed send confirmation email.
 
-            throw new IllegalStateException("email already taken");
+            throw new IllegalStateException("username already taken");
         }
 
         String encodedPassword = bCryptPasswordEncoder
@@ -70,7 +69,7 @@ public class AppUserService implements UserDetailsService {
         return token;
     }
 
-    public int enableAppUser(String email) {
-        return appUserRepository.enableAppUser(email);
+    public int enableAppUser(String username) {
+        return appUserRepository.enableAppUser(username);
     }
 }

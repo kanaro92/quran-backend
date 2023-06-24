@@ -21,18 +21,18 @@ public class AppRegistrationService {
     private final ConfirmationTokenService confirmationTokenService;
 
     public String register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.
-                test(request.getEmail());
-
-        if (!isValidEmail) {
-            throw new IllegalStateException("email not valid");
-        }
+//        boolean isValidEmail = emailValidator.
+//                test(request.getEmail());
+//
+//        if (!isValidEmail) {
+//            throw new IllegalStateException("email not valid");
+//        }
 
         String token = appUserService.signUpUser(
                 new AppUser(
                         request.getFirstName(),
                         request.getLastName(),
-                        request.getEmail(),
+                        request.getUsername(),
                         request.getPassword(),
                         AppUserRole.ADMIN
 
@@ -49,7 +49,7 @@ public class AppRegistrationService {
                         new IllegalStateException("token not found"));
 
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
+            throw new IllegalStateException("username already confirmed");
         }
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
@@ -60,7 +60,7 @@ public class AppRegistrationService {
 
         confirmationTokenService.setConfirmedAt(token);
         appUserService.enableAppUser(
-                confirmationToken.getAppUser().getEmail());
+                confirmationToken.getAppUser().getUsername());
         return "confirmed";
     }
 }
