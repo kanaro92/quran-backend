@@ -59,6 +59,10 @@ public class VenteService {
         return venteMapper.listVenteToDTO(venteRepository.findAll());
     }
 
+    public List<VenteDTO> findAllByCreatedBy(Long id) {
+        return venteMapper.listVenteToDTO(venteRepository.findAllByCreatedBy_Id(id));
+    }
+
     public VenteDTO findByDeviceInfoModelUniqueId(String uid) {
         return venteMapper.venteToDTO(venteRepository.findByDeviceInfoModel_UniqueId(uid));
     }

@@ -1,6 +1,7 @@
 package mr.quran.pulaar.quranpulaar.repository;
 
 import mr.quran.pulaar.quranpulaar.model.Vente;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,4 +16,6 @@ public interface VenteRepository
     Vente findByPhone(String code);
     Vente findByCode_CodeAndIsUsedIsFalse(Integer code);
     Vente findByDeviceInfoModel_UniqueId(String uid);
+
+    List<Vente> findAllByCreatedBy_Id(Long id);
 }

@@ -56,6 +56,11 @@ public class VenteController {
     public ResponseEntity<VenteDTO> reinitialiseUsedByCode(@PathVariable Integer code) {
         return ResponseEntity.status(HttpStatus.OK).body(venteService.reinitialiseUsedByCode(code));
     }
+
+    @GetMapping("/byCreatedBy/{id}")
+    public ResponseEntity<List<VenteDTO>> findbyCreatedBy(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(venteService.findAllByCreatedBy(id));
+    }
 }
 
 
