@@ -37,10 +37,10 @@ public class VenteService {
     }
 
     public VenteDTO save(VenteDTO vente) {
-        if(vente.getId() == null){
+        if (vente.getId() == null) {
             vente.setCreatedDate(LocalDateTime.now());
             vente.setUpdatedDate(LocalDateTime.now());
-            if(findVenteByPhoneNumber(vente.getPhone()) != null) {
+            if (findVenteByPhoneNumber(vente.getPhone()) != null) {
                 throw new RuntimeException("Phone number already exists");
             }
             vente.setCode(codeService.generateCode());
@@ -69,16 +69,17 @@ public class VenteService {
 
     public VenteDTO reinitialiseUsedByCode(Integer code) {
         Vente vente = venteRepository.findByCode_Code(code);
-        if (vente != null) {
-            vente.setUsed(false);
-            DeviceInfoModel device = vente.getDeviceInfoModel();
-            vente.setDeviceInfoModel(null);
-            //remove device if exists
-            if(device != null){
-                deviceInfoService.deleteDevice(device);
-            }
-            return venteMapper.venteToDTO(venteRepository.save(vente));
+        if (vente == null) {
+            throw new RuntimeException("Code doesn't exists");
         }
-        return null;
+        vente.setUsed(false);
+        vente.setUpdatedDate(LocalDateTime.now());
+        DeviceInfoModel device = vente.getDeviceInfoModel();
+        vente.setDeviceInfoModel(null);
+        //remove device if exists
+        if (device != null) {
+            deviceInfoService.deleteDevice(device);
+        }
+        return venteMapper.venteToDTO(venteRepository.save(vente));
     }
 }

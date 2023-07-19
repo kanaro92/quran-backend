@@ -54,7 +54,14 @@ public class VenteController {
 
     @GetMapping("/reinitialiseUsedByCode/{code}")
     public ResponseEntity<VenteDTO> reinitialiseUsedByCode(@PathVariable Integer code) {
-        return ResponseEntity.status(HttpStatus.OK).body(venteService.reinitialiseUsedByCode(code));
+        VenteDTO vente = null;
+        try {
+            vente = venteService.reinitialiseUsedByCode(code);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vente);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(vente);
     }
 
     @GetMapping("/byCreatedBy/{id}")
