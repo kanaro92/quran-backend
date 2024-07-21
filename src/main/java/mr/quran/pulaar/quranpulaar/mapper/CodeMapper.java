@@ -9,7 +9,7 @@ public class CodeMapper {
 
     public CodeDTO codeToDTO(Code code) {
         if(code == null) {
-            return null;
+            throw new NullPointerException("Code should not be null");
         }
         return CodeDTO.builder()
                 .id(code.getId())

@@ -45,8 +45,13 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .antMatchers("/actuator/**").permitAll()
                         .antMatchers("/api/v1/quran/token").permitAll()
-                        .antMatchers("/api/v1/quran/mobile-app-version", "/api/v1/quran/registration/**", "/api/v1/quran/ventes/byPhoneUID", "/api/v1/quran/devices/**").permitAll()
+                        .antMatchers(
+                                "/api/v1/quran/mobile-app-version",
+                                "/api/v1/quran/registration/**",
+                                "/api/v1/quran/ventes/byPhoneUID",
+                                "/api/v1/quran/devices/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
